@@ -1,12 +1,12 @@
-all: clear build run
+all: clean build run
 
-clear:
+clean:
 	@rm -rf a.out
 
 build:
-	@gcc *.c
+	@gcc src/*.c
 
 run:
 	@./a.out
 
-.PHONY: all clear build run
+.PHONY: all clean build run
