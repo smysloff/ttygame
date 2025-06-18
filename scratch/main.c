@@ -1,70 +1,52 @@
 #include <stdio.h>
-#include <stdbool.h>
+
+#include "entity.h"
+#include "rgb_color.h"
+#include "vec2.h"
 
 #define ENTITY_COUNT 8
 
-typedef struct Vec2
+typedef struct game_engine
 {
-  int x;
-  int y;
-} Vec2;
+  entity entities[ENTITY_COUNT];
+  size_t entity_id;
+} game_engine;
 
-typedef struct fVec2
+game_engine g = { 0 };
+
+void game_init(void)
 {
-  float x;
-  float y;
-} fVec2;
-
-typedef struct RGB_Color
-{
-  unsigned char r;
-  unsigned char g;
-  unsigned char b;
-} RGB_Color;
-
-typedef struct Direction
-{
-  bool top;
-  bool down;
-  bool left;
-  bool right;
-} Direction;
-
-typedef struct Entity
-{
-  Vec2 pos;
-  Direction dir;
-  RGB_Color color;
-} Entity;
-
-typedef struct Game_Engine
-{
-  Entity entities[ENTITY_COUNT];
-} Game_Engine;
-
-Game_Engine g;
-
-void Game_Init(void)
-{
-
+  printf("game init\n");
 }
 
-void Game_Loop(void)
+void game_loop(void)
 {
-
+  printf("game loop\n");
 }
 
-void Game_Over(void)
+void game_over(void)
 {
-
+  printf("game over\n");
 }
 
-void Game_AddEntity(Vec2 v, RGB_Color color)
+void game_add_entity(vec2 pos, rgb_color color)
 {
-
+  assert(g.entity_id < sizeof(g.entities) && "Too many entities!");
+  g.entities[g.entity_id++] = entity_init(pos, color);
 }
 
 int main(void)
 {
+  game_add_entity(
+    vec2_init(21, 42), rgb_color_init(  0, 255,   0));
 
+  game_add_entity(
+    vec2_init(42, 21), rgb_color_init(  0,   0, 255));
+
+  game_init();
+  game_loop();
+  game_over();
+
+  vec2_print(&g.entities[0]);
+  vec2_print(&g.entities[1]);
 }
