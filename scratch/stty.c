@@ -3,6 +3,7 @@
 
 #include "stty.h"
 
+<<<<<<< HEAD
 stty termopts = { 0 };
 
 void stty_frame_rate(int rate)
@@ -30,5 +31,26 @@ void stty_restore(void)
   cursor_position(0, 0);
   select_graphic_rendition(0);
   cursor_show();
+=======
+// @todo error handling
+void stty_flush_input(void)
+{
+  tcflush(STDIN_FILENO, TCIFLUSH);
+}
+
+// @todo error handling
+void stty_mode_raw(stty *tty)
+{
+  tcgetattr(STDIN_FILENO, &tty->original);
+  tty->modified = tty->original;
+  tty->modified.c_lflag &= ~(ICANON | ECHO);
+  tcsetattr(STDIN_FILENO, TCSAFLUSH, &tty->modified);
+}
+
+// @todo error handling
+void stty_restore(stty *tty)
+{
+  tcsetattr(STDIN_FILENO, TCSAFLUSH, &tty->original);
+>>>>>>> 34901ac (wip: refactor)
 }
 

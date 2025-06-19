@@ -28,3 +28,4 @@ void vec2_print(const vec2 *v)
   assert(v != NULL && "Attempt to print NULL vec2");
   printf("vec2 { x: %d, y: %d }\n", v->x, v->y);
 }
+

@@ -19,3 +19,4 @@ bool rgb_color_equals(
 rgb_color rgb_color_from_hex(uint32_t hex);
 
 rgb_color rgb_color_init(uint8_t r, uint8_t g, uint8_t b);
+

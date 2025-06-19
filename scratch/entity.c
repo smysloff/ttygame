@@ -11,3 +11,4 @@ entity entity_init(vec2 *pos, rgb_color *color)
     .dir   = { 0 },
   };
 }
+
