@@ -6,13 +6,13 @@
 rgb_color rgb_color_clone(rgb_color *c)
 {
   assert(c != NULL && "Attempt to clone NULL rgb_color");
-  return rgb_color_init();
+  return rgb_color_init(c->r, c->g, c->b);
 }
 
 bool rgb_color_equals(const rgb_color *c1, const rgb_color *c2)
 {
   assert(c1 != NULL && c2 != NULL
-    && "Attemt to compare with NULL rgb_color")
+    && "Attemt to compare with NULL rgb_color");
 
   return c1->r == c2->r
       && c1->g == c2->g
