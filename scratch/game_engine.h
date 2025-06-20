@@ -4,6 +4,7 @@
 #pragma once
 
 #include <unistd.h>
+#include <stddef.h>
 
 #include "config.h"
 #include "entity.h"
@@ -16,6 +17,7 @@ typedef struct game_engine
 {
   entity entities[ENTITY_COUNT];
   size_t entity_id;
+  stty termopts;
 } game_engine;
 
 void game_init(void);

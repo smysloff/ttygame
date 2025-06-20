@@ -103,11 +103,11 @@ void cursor_restore_position(void)
 
 void cursor_show(void)
 {
-  printf(CSI "25" "h");
+  printf(CSI "?25" "h");
 }
 
 void cursor_hide(void)
 {
-  printf(CSI "25" "l");
+  printf(CSI "?25" "l");
 }
 

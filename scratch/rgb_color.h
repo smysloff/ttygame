@@ -1,6 +1,8 @@
 
 // file: rgb_color.h
 
+#pragma once
+
 #include <assert.h>
 #include <stdbool.h>
 #include <stddef.h>
