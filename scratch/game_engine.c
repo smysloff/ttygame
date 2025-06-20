@@ -8,11 +8,16 @@ game_engine g = { 0 };
 void game_init(void)
 {
   atexit(stty_restore);
-  stty_frame_rate(TIMEOUT);
+  //stty_frame_rate(TIMEOUT);
+  stty_frame_rate(5);
 }
 
 void game_loop(void)
 {
+  int i = 0;
+
+  char buf[8] = { 0 };
+
   while (!g.quit)
   {
     // stty_frame()
@@ -23,8 +28,16 @@ void game_loop(void)
     cursor_position(0, 0);
     //fflush(stdout);
 
-    printf("%d", i);
+    ssize_t read_bytes =
+      read(STDIN_FILENO, buf, sizeof(buf) - 1);
+
+    buf[read_bytes] = '\0';
+
+
+    printf("%d: %s", i++, buf);
     cursor_position(0, 0);
+
+    memset(buf, 0, sizeof(buf));
 
     // stty_flush()
     fflush(stdout);
