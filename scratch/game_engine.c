@@ -7,26 +7,27 @@ game_engine g = { 0 };
 
 void game_init(void)
 {
-  stty_frame_rate(TIMEOUT);
   atexit(stty_restore);
+  stty_frame_rate(TIMEOUT);
 }
 
 void game_loop(void)
 {
-  for (int i = 0; i < 10; ++i)
+  while (!g.quit)
   {
+    // stty_frame()
+
+    // clear screan
     erase_display(ERASE_ALL);
-    cursor_position(0, 0);
     select_graphic_rendition(0);
-    cursor_hide();
-    fflush(stdout);
+    cursor_position(0, 0);
+    //fflush(stdout);
 
     printf("%d", i);
     cursor_position(0, 0);
-    cursor_hide();
-    fflush(stdout);
 
-    sleep(1);
+    // stty_flush()
+    fflush(stdout);
   }
 }
 

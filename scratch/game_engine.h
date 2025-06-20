@@ -17,7 +17,7 @@ typedef struct game_engine
 {
   entity entities[ENTITY_COUNT];
   size_t entity_id;
-  stty termopts;
+  bool quit;
 } game_engine;
 
 void game_init(void);

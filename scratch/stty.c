@@ -23,8 +23,11 @@ void stty_frame_rate(int rate)
   tcsetattr(STDIN_FILENO, TCSAFLUSH, &termopts.modified);
 
   cursor_hide();
-  cursor_position(0, 0);
+
+  // clear screan
   erase_display(ERASE_ALL);
+  select_graphic_rendition(0);
+  cursor_position(0, 0);
 }
 
 void stty_mode_raw(void)
@@ -39,9 +42,11 @@ void stty_restore(void)
 {
   tcsetattr(STDIN_FILENO, TCSAFLUSH, &termopts.original);
 
+  // clear screan
   erase_display(ERASE_ALL);
-  cursor_position(0, 0);
   select_graphic_rendition(0);
+  cursor_position(0, 0);
+
   cursor_show();
 }
 
