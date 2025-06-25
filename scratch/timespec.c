@@ -3,12 +3,23 @@
 
 #include "timespec.h"
 
-t_timespec timespec_init(clockid_t clockid)
+bool timespec_init(t_timespec *ts, clockid_t clockid)
+{
+  if (clock_gettime(clockid, ts) == -1)
+  {
+    return false;
+    perror("timespec_init: clock_gettime failed");
+  }
+
+  return true;
+}
+
+t_timespec timespec_create(clockid_t clockid)
 {
   t_timespec ts = { 0 };
 
   if (clock_gettime(clockid, &ts) == -1)
-    perror("timespec_get: clock_gettime failed");
+    perror("timespec_create: clock_gettime failed");
 
   return ts;
 }
@@ -72,7 +83,7 @@ int timespec_cmp(
                                return  0;
 }
 
-t_timespec *timespec_add(
+void timespec_add(
   t_timespec *a,
   const t_timespec *b
 ) {
@@ -88,11 +99,9 @@ t_timespec *timespec_add(
     ++a->tv_sec;
     a->tv_nsec -= NSEC_PER_SEC;
   }
-
-  return a;
 }
 
-t_timespec *timespec_sub(
+void timespec_sub(
   t_timespec *a,
   const t_timespec *b
 ) {
@@ -108,7 +117,5 @@ t_timespec *timespec_sub(
     --a->tv_sec;
     a->tv_nsec += NSEC_PER_SEC;
   }
-
-  return a;
 }
 

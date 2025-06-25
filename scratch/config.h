@@ -12,5 +12,8 @@
 
 // constants
 
+#define LESS    -1
+#define EQUAL    0
+#define GREATER  1
 #define NSEC_PER_SEC 1'000'000'000L
 
