@@ -3,30 +3,37 @@
 
 #pragma once
 
-#include "config.h"
+#include <assert.h>
+#include <stdio.h>
+#include <time.h>
+#include "config.h" // NSEC_PER_SEC
 
-struct timespec timespec_add(  // a += b
-  struct timespec *a,
-  const struct timespec *b
-);
+typedef struct timespec t_timespec;
 
-long timespec_cmp(             // a <=> b
-  const struct timespec *a,
-  const struct timespec *b
-);
+t_timespec timespec_init(clockid_t clockid);
 
-struct timespec timespec_diff( // a - b
-  const struct timespec *a,
-  const struct timespec *b
-);
+t_timespec timespec_sum(
+  const t_timespec *a,
+  const t_timespec *b
+) __attribute__((nonnull(1, 2)));
 
-struct timespec timespec_sub(  // a -= b
-  struct timespec *a,
-  const struct timespec *b
-);
+t_timespec timespec_diff(
+  const t_timespec *a,
+  const t_timespec *b
+) __attribute__((nonnull(1, 2)));
 
-struct timespec timespec_sum(  // a + b
-  const struct timespec *a,
-  const struct timespec *b
-);
+int timespec_cmp(
+  const t_timespec *a,
+  const t_timespec *b
+) __attribute__((nonnull(1, 2)));
+
+t_timespec *timespec_add(
+  t_timespec *a,
+  const t_timespec *b
+) __attribute__((nonnull(1, 2)));
+
+t_timespec *timespec_sub(
+  t_timespec *a,
+  const t_timespec *b
+) __attribute__((nonnull(1, 2)));
 

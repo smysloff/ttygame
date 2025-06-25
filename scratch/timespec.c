@@ -3,110 +3,112 @@
 
 #include "timespec.h"
 
-struct timespec *timespec_add(
-  struct timespec *a,
-  const struct timespec *b
+t_timespec timespec_init(clockid_t clockid)
+{
+  t_timespec ts = { 0 };
+
+  if (clock_gettime(clockid, &ts) == -1)
+    perror("timespec_get: clock_gettime failed");
+
+  return ts;
+}
+
+t_timespec timespec_sum(
+  const t_timespec *a,
+  const t_timespec *b
 ) {
-  if (!a || !b)
+  assert(a != NULL
+      && b != NULL
+      && "timespec_sum args can't be NULL");
+
+  t_timespec ts = { 0 };
+
+  ts.tv_sec = a->tv_sec + b->tv_sec;
+  ts.tv_nsec = a->tv_nsec + b->tv_nsec;
+
+  while (ts.tv_nsec >= NSEC_PER_SEC)
   {
-    perror("timespec_add args can't be NULL");
-    return (struct timespec) { 0 };
+    ++ts.tv_sec;
+    ts.tv_nsec -= NSEC_PER_SEC;
   }
+
+  return ts;
+}
+
+t_timespec timespec_diff(
+  const t_timespec *a,
+  const t_timespec *b
+) {
+  assert(a != NULL
+      && b != NULL
+      && "timespec_diff args can't be NULL");
+
+  t_timespec ts = { 0 };
+
+  ts.tv_sec = a->tv_sec - b->tv_sec;
+  ts.tv_nsec = a->tv_nsec - b->tv_nsec;
+
+  while (ts.tv_nsec < 0)
+  {
+    --ts.tv_sec;
+    ts.tv_nsec += NSEC_PER_SEC;
+  }
+
+  return ts;
+}
+
+int timespec_cmp(
+  const t_timespec *a,
+  const t_timespec *b
+) {
+  assert(a != NULL
+      && b != NULL
+      && "timespec_cmp args can't be NULL");
+
+  if (a->tv_sec > b->tv_sec)   return  1;
+  if (a->tv_sec < b->tv_sec)   return -1;
+  if (a->tv_nsec > b->tv_nsec) return  1;
+  if (a->tv_nsec < b->tv_nsec) return -1;
+                               return  0;
+}
+
+t_timespec *timespec_add(
+  t_timespec *a,
+  const t_timespec *b
+) {
+  assert(a != NULL
+      && b != NULL
+      && "timespec_add args can't be NULL");
 
   a->tv_sec += b->tv_sec;
   a->tv_nsec += b->tv_nsec;
 
-  if (a->tv_nsec >= NSEC_PER_SEC)
+  while (a->tv_nsec >= NSEC_PER_SEC)
   {
-    a->tv_nsec -= NSEC_PER_SEC;
     ++a->tv_sec;
+    a->tv_nsec -= NSEC_PER_SEC;
   }
 
   return a;
 }
 
-struct timespec timespec_cmp(
-  const struct timespec *a,
-  const struct timespec *b
+t_timespec *timespec_sub(
+  t_timespec *a,
+  const t_timespec *b
 ) {
-  if (!a || !b)
+  assert(a != NULL
+      && b != NULL
+      && "timespec_sub args can't be NULL");
+
+  a->tv_sec -= b->tv_sec;
+  a->tv_nsec -= b->tv_nsec;
+
+  while (a->tv_nsec < 0)
   {
-    perror("timespec_cmp args can't be NULL");
-    return (struct timespec) { 0 };
-  }
-
-  return a->tv_sec == b->tv_sec
-    ? a->tv_nsec - b->tv_nsec
-    : a->tv_sec - b->tv_sec;
-}
-
-struct timespec timespec_diff(
-  const struct timespec *a,
-  const struct timespec *b
-) {
-  if (!a || !b)
-  {
-    perror("timespec_diff args can't be NULL");
-    return (struct timespec) { 0 };
-  }
-
-  struct timespec result = (struct timespec) {
-    .tv_sec = a->tv_sec - b->tv_sec,
-    .tv_nsec = a->tv_nsec - b->tv_nsec,
-  };
-
-  if (result.tv_nsec < 0)
-  {
-    result.tv_nsec += NSEC_PER_SEC;
-    --result.tv_sec;
-  }
-
-  return result;
-}
-
-struct timespec *timespec_sub(
-  struct timespec *a,
-  const struct timespec *b
-) {
-  if (!a || !b)
-  {
-    perror("timespec_sub args can't be NULL");
-    return (struct timespec) { 0 };
-  }
-
-  a->tv_sec -= b->tv_sec,
-  a->tv_nsec -= b->tv_nsec,
-
-  if (a->tv_nsec < 0)
-  {
-    a->tv_nsec += NSEC_PER_SEC;
     --a->tv_sec;
+    a->tv_nsec += NSEC_PER_SEC;
   }
 
   return a;
-}
-
-struct timespec timespec_sum(
-  const struct timespec *a,
-  const struct timespec *b
-) {
-  if (!a || !b)
-  {
-    perror("timespec_add args can't be NULL");
-    return (struct timespec) { 0 };
-  }
-
-  struct timespec result = (struct timespec) {
-    .tv_sec = a->tv_sec + b->tv_sec,
-    .tv_nsec = a->tv_nsec + b->tv_nsec,
-  };
-
-  if (result.tv_nsec >= NSEC_PER_SEC)
-  {
-    result.tv_nsec -= NSEC_PER_SEC;
-    ++result.tv_sec;
-  }
-
-  return result;
 }
 
