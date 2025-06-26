@@ -3,7 +3,7 @@
 
 #include "game_engine.h"
 
-extern game_engine g;
+extern t_game_engine g;
 
 int main(void)
 {

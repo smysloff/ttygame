@@ -8,8 +8,7 @@ t_game_engine g = { 0 };
 void game_init(void)
 {
   atexit(stty_restore);
-  //stty_frame_rate(TIMEOUT);
-  stty_frame_rate(5);
+  stty_mode_raw();
 }
 
 void game_loop(void)
@@ -51,7 +50,7 @@ void game_over(void)
   // ...
 }
 
-void game_add_entity(vec2 pos, rgb_color color)
+void game_add_entity(t_vec2 pos, t_rgb_color color)
 {
   assert(g.entity_id < sizeof(g.entities) && "Too many entities!");
   g.entities[g.entity_id++] = entity_init(&pos, &color);

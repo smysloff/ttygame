@@ -3,7 +3,7 @@
 
 #include "vec2.h"
 
-t_vec2 vec2_clone(const vec2 *v)
+t_vec2 vec2_clone(const t_vec2 *v)
 {
   assert(v != NULL && "Attempt to clone NULL t_vec2");
   return vec2_init(v->x, v->y);

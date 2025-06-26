@@ -7,13 +7,13 @@
 
 int main(void)
 {
-  t_timespec begin = timespec_init(CLOCK_MONOTONIC);
+  t_timespec begin = timespec_create(CLOCK_MONOTONIC);
   printf("%ld | %ld\n", begin.tv_sec, begin.tv_nsec);
 
   t_timespec sleep_duration = { .tv_sec = 1, .tv_nsec = 0 };
   clock_nanosleep(CLOCK_MONOTONIC, 0, &sleep_duration, NULL);
 
-  t_timespec end = timespec_init(CLOCK_MONOTONIC);
+  t_timespec end = timespec_create(CLOCK_MONOTONIC);
   printf("%ld | %ld\n", end.tv_sec, end.tv_nsec);
 
   t_timespec delta = timespec_diff(&end, &begin);
