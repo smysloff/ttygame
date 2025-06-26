@@ -12,11 +12,13 @@
 #include "config.h"
 #include "terminal.h"
 
+typedef struct termios t_termios;
+
 typedef struct stty
 {
-  struct termios original;
-  struct termios modified;
-} stty;
+  t_termios original;
+  t_termios modified;
+} t_stty;
 
 void stty_flush_input(void);
 

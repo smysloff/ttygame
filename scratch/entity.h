@@ -10,13 +10,17 @@ typedef struct directions
 {
   bool top,  down;
   bool left, right;
-} directions;
+} t_directions;
 
 typedef struct entity
 {
-  vec2       pos;
-  rgb_color  color;
-  directions dir;
-} entity;
+  t_vec2       pos;
+  t_rgb_color  color;
+  t_directions dir;
+} t_entity;
 
-entity entity_init(vec2 *pos, rgb_color *color);
+t_entity entity_init(
+  t_vec2 *pos,
+  t_rgb_color *color
+) __attribute__((nonnull(1)));
+

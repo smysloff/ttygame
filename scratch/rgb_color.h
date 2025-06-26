@@ -8,17 +8,21 @@
 #include <stddef.h>
 #include <stdint.h>
 
-typedef struct rgb_color
+typedef struct t_rgb_color
 {
-  unsigned char r, g, b;
-} rgb_color;
+  uint8_t r, g, b;
+} t_rgb_color;
 
-rgb_color rgb_color_clone(rgb_color *c);
+t_rgb_color rgb_color_clone(
+  t_rgb_color *c
+) __attribute((nonnull(1)));
 
 bool rgb_color_equals(
-  const rgb_color *c1, const rgb_color *c2);
+  const t_rgb_color *c1,
+  const t_rgb_color *c2
+) __attribute((nonnull(1, 2)));
 
-rgb_color rgb_color_from_hex(uint32_t hex);
+t_rgb_color rgb_color_from_hex(uint32_t hex);
 
-rgb_color rgb_color_init(uint8_t r, uint8_t g, uint8_t b);
+t_rgb_color rgb_color_init(uint8_t r, uint8_t g, uint8_t b);
 

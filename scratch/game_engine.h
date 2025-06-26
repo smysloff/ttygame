@@ -15,10 +15,10 @@
 
 typedef struct game_engine
 {
-  entity entities[ENTITY_COUNT];
+  t_entity entities[ENTITY_COUNT];
   size_t entity_id;
   bool quit;
-} game_engine;
+} t_game_engine;
 
 void game_init(void);
 
@@ -26,5 +26,5 @@ void game_loop(void);
 
 void game_over(void);
 
-void game_add_entity(vec2 pos, rgb_color color);
+void game_add_entity(t_vec2 pos, t_rgb_color color);
 

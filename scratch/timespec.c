@@ -76,11 +76,11 @@ int timespec_cmp(
       && b != NULL
       && "timespec_cmp args can't be NULL");
 
-  if (a->tv_sec > b->tv_sec)   return  1;
-  if (a->tv_sec < b->tv_sec)   return -1;
-  if (a->tv_nsec > b->tv_nsec) return  1;
-  if (a->tv_nsec < b->tv_nsec) return -1;
-                               return  0;
+  if (a->tv_sec > b->tv_sec)   return GREATER;
+  if (a->tv_sec < b->tv_sec)   return LESS;
+  if (a->tv_nsec > b->tv_nsec) return GREATER;
+  if (a->tv_nsec < b->tv_nsec) return LESS;
+                               return EQUAL;
 }
 
 void timespec_add(

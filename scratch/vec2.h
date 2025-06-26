@@ -11,13 +11,13 @@
 typedef struct vec2
 {
   int x, y;
-} vec2;
+} t_vec2;
 
-vec2 vec2_clone(const vec2 *v);
+t_vec2 vec2_clone(const t_vec2 *v);
 
-bool vec2_equals(const vec2 *v1, const vec2 *v2);
+bool vec2_equals(const t_vec2 *v1, const t_vec2 *v2);
 
-vec2 vec2_init(int x, int y);
+t_vec2 vec2_init(int x, int y);
 
-void vec2_print(const vec2 *v);
+void vec2_print(const t_vec2 *v);
 

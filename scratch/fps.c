@@ -12,15 +12,21 @@ t_fps fps_create(long frame_rate)
 
 void fps_init(t_fps *fps, long frame_rate)
 {
-  timespec_init(&fps->curr, frame_rate);
+  assert(fps != NULL && "fps pointer can't be NULL in fps_init");
+
+  timespec_init(&fps->curr, CLOCK_MONOTONIC);
+
+  fps->count = 1;
 
   fps->duration.tv_nsec = (frame_rate > 0)
     ? NSEC_PER_SEC / frame_rate
-    : NSEC_PER_SEC;
+    : 0;
 }
 
 void fps_update(t_fps *fps)
 {
+  assert(fps != NULL && "fps pointer can't be NULL in fps_update");
+
   // save previous current time
   fps->prev = fps->curr;
 
@@ -45,7 +51,8 @@ void fps_update(t_fps *fps)
     timespec_add(&fps->delta, &diff);
 
     // sleep
-    clock_nanosleep(CLOCK_MONOTONIC, 0, &diff, NULL);
+    if (-1 == clock_nanosleep(CLOCK_MONOTONIC, 0, &diff, NULL))
+      perror("fps_update: clock_nanosleep failed");
   }
 
 
@@ -59,7 +66,7 @@ void fps_update(t_fps *fps)
   else
   {
     fps->value = fps->count;
-    fps->count = 0;
+    fps->count = 1;
 
     while (fps->delta.tv_sec > 0)
       --fps->delta.tv_sec;

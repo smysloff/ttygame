@@ -3,7 +3,7 @@
 
 #include "game_engine.h"
 
-game_engine g = { 0 };
+t_game_engine g = { 0 };
 
 void game_init(void)
 {
