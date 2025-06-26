@@ -31,7 +31,7 @@ void fps_update(t_fps *fps)
   t_timespec frame_duration = timespec_diff(&fps->curr, &fps->prev);
 
   // add current frame duration to fps delta counter
-  timespec_add(&fps->delta, frame_duration);
+  timespec_add(&fps->delta, &frame_duration);
 
   // add delay to the current frame duration
   // to sync frame duration with a frame rate
@@ -52,14 +52,14 @@ void fps_update(t_fps *fps)
   // update fps counter
 
   if (fps->delta.tv_sec < 1)
-    ++fps->counter;
+    ++fps->count;
 
   // of update fps value if fps->delta >g 1 sec
 
   else
   {
-    fps->value = fps->counter;
-    fps->counter = 0;
+    fps->value = fps->count;
+    fps->count = 0;
 
     while (fps->delta.tv_sec > 0)
       --fps->delta.tv_sec;
