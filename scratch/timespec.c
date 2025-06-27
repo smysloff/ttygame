@@ -56,7 +56,7 @@ t_timespec timespec_diff(
 
   t_timespec ts = { 0 };
 
-  ts.tv_sec = a->tv_sec - b->tv_sec;
+  ts.tv_sec  = a->tv_sec  - b->tv_sec;
   ts.tv_nsec = a->tv_nsec - b->tv_nsec;
 
   while (ts.tv_nsec < 0)
@@ -76,8 +76,8 @@ int timespec_cmp(
       && b != NULL
       && "timespec_cmp args can't be NULL");
 
-  if (a->tv_sec > b->tv_sec)   return GREATER;
-  if (a->tv_sec < b->tv_sec)   return LESS;
+  if (a->tv_sec  > b->tv_sec)  return GREATER;
+  if (a->tv_sec  < b->tv_sec)  return LESS;
   if (a->tv_nsec > b->tv_nsec) return GREATER;
   if (a->tv_nsec < b->tv_nsec) return LESS;
                                return EQUAL;
@@ -91,7 +91,7 @@ void timespec_add(
       && b != NULL
       && "timespec_add args can't be NULL");
 
-  a->tv_sec += b->tv_sec;
+  a->tv_sec  += b->tv_sec;
   a->tv_nsec += b->tv_nsec;
 
   while (a->tv_nsec >= NSEC_PER_SEC)
@@ -109,7 +109,7 @@ void timespec_sub(
       && b != NULL
       && "timespec_sub args can't be NULL");
 
-  a->tv_sec -= b->tv_sec;
+  a->tv_sec  -= b->tv_sec;
   a->tv_nsec -= b->tv_nsec;
 
   while (a->tv_nsec < 0)

@@ -16,7 +16,7 @@ typedef enum ERASE_OPTION
 } ERASE_OPTION;
 
 void cursor_up(unsigned n); // CUU
-                                //
+
 void cursor_down(unsigned n); // CUD
 
 void cursor_forward(unsigned n); // CUF
@@ -56,4 +56,6 @@ void cursor_restore_position(void); // RCP
 void cursor_show(void); // DECTCEM
 
 void cursor_hide(void); // DECTCEM
+
+void clear_screen(void);
 

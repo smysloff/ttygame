@@ -17,8 +17,6 @@ void fps_init(t_fps *fps, long frame_rate)
 
   timespec_init(&fps->curr, CLOCK_MONOTONIC);
 
-  fps->count = 1;
-
   fps->duration.tv_nsec = (frame_rate > 0)
     ? NSEC_PER_SEC / frame_rate
     : 0;
@@ -36,7 +34,8 @@ void fps_update(t_fps *fps)
   timespec_init(&fps->curr, CLOCK_MONOTONIC);
 
   // get current frame duration
-  t_timespec frame_duration = timespec_diff(&fps->curr, &fps->prev);
+  t_timespec frame_duration =
+    timespec_diff(&fps->curr, &fps->prev);
 
   // add current frame duration to fps delta counter
   timespec_add(&fps->delta, &frame_duration);
@@ -60,15 +59,14 @@ void fps_update(t_fps *fps)
 
   // update fps counter
 
-  if (fps->delta.tv_sec < 1)
-    ++fps->count;
+  ++fps->count;
 
-  // or update fps value if fps->delta >g 1 sec
+  // update fps value if fps->delta > 1 sec
 
-  else
+  if (fps->delta.tv_sec > 0)
   {
     fps->value = fps->count;
-    fps->count = 1;
+    fps->count = 0;
 
     while (fps->delta.tv_sec > 0)
       --fps->delta.tv_sec;

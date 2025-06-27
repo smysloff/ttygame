@@ -24,5 +24,9 @@ bool rgb_color_equals(
 
 t_rgb_color rgb_color_from_hex(uint32_t hex);
 
-t_rgb_color rgb_color_init(uint8_t r, uint8_t g, uint8_t b);
+t_rgb_color rgb_color_init(
+  uint8_t r,
+  uint8_t g,
+  uint8_t b
+);
 

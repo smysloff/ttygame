@@ -4,6 +4,7 @@
 #pragma once
 
 #include <assert.h>
+
 #include "config.h"
 #include "timespec.h"
 
@@ -27,6 +28,10 @@ void fps_init(
 ) __attribute__((nonnull(1)));
 
 void fps_update(
+  t_fps *fps
+) __attribute__((nonnull(1)));
+
+void fps_log(
   t_fps *fps
 ) __attribute__((nonnull(1)));
 

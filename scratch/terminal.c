@@ -111,3 +111,10 @@ void cursor_hide(void)
   printf(CSI "?25" "l");
 }
 
+void clear_screen(void)
+{
+  erase_display(ERASE_ALL);
+  select_graphic_rendition(0);
+  cursor_position(0, 0);
+}
+

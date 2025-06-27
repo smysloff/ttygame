@@ -7,7 +7,7 @@
 // options
 
 #define ENTITY_COUNT 8
-#define TIMEOUT 5 // 5 -> 0.5 sec
+#define FRAME_RATE 2
 
 
 // constants

@@ -22,8 +22,6 @@ typedef struct stty
 
 void stty_flush_input(void);
 
-void stty_frame_rate(int rate);
-
 void stty_mode_raw(void);
 
 void stty_restore(void);
