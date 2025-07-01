@@ -8,102 +8,61 @@
 #include <unistd.h>
 
 #include "config.h"
+#include "fps.h"
 #include "keys.h"
 #include "terminal.h"
 #include "timespec.h"
 
-
-// source code
-
-typedef struct fps
-{
-  struct timespec prev;
-  struct timespec curr;
-  struct timespec delta;
-  long value;
-  long count;
-} t_fps;
-
-
 int main(void)
 {
-  t_keys keys = {0};
-
   prepare_terminal();
-
-  timespec_gettime(&keys.time);
-
+  init_fps();
+  init_keys(get_timestamp());
 
   while (true)
   {
-    struct timespec timestamp; // fps | game_engine
-    ssize_t bytes_read;
+    // update fps counter
+    // and get keys
 
-    timespec_gettime(&timestamp);
+    update_fps();
+    update_keys(get_timestamp());
 
-
-    // get keys
-
-    bytes_read = read(STDIN_FILENO, &keys.pressed, 1);
-
-    if (bytes_read == 1)
-    {
-      keys.time = timestamp;
-
-      if (!isprint(keys.pressed))
-      {
-        char c;
-        size_t i = 0;
-        keys.sequence[i++] = '?';
-        while (
-          read(STDIN_FILENO, &c, 1) == 1
-          && i < sizeof(keys.sequence) - 1
-        ) {
-          keys.sequence[i++] = c;
-        }
-        keys.sequence[i] = '\0';
-      }
-    }
-
-    keys.duration = timespec_diff(&timestamp, &keys.time);
-
-    if (keys.duration.tv_sec >= 1)
-      keys.pressed = 0;
-
-
-    // print keys
+    // print info
 
     clear_screen();
 
-    if (keys.pressed)
+    // - print fps info
+
+    printf("fps: %ld", get_fps());
+
+
+    // - print keys info
+
+    next_line();
+
+    const t_keys *keys = get_keys();
+
+    if (keys->value)
     {
-      (isprint(keys.pressed))
-        ? printf("char: %c (%d)", keys.pressed,  keys.pressed)
-        : printf("char: %s (%d)", keys.sequence, keys.pressed);
+      (isprint(keys->value))
+        ? printf("char: %c (%d)", keys->value,    keys->value)
+        : printf("char: %s (%d)", keys->sequence, keys->value);
     }
 
     else
       printf("no input");
 
-
-    // print info
+    // - print game info
 
     next_line();
     printf("press any key or Ctrl+C to exit");
 
 
     // flush io
+    // and add delay
 
     flush_terminal();
-
-
-    // delay between frames
-
-    struct timespec sleep_time = {
-      .tv_sec  = 0,
-      .tv_nsec = FRAME_DURATION,
-    };
-    clock_nanosleep(CLOCK_MONOTONIC, 0, &sleep_time, NULL);
+    sync_frame_rate();
 
   } // while (true)
 

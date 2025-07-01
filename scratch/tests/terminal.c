@@ -13,7 +13,7 @@ void prepare_terminal(void)
   struct sigaction sigact = {
     .sa_sigaction = sigint_handler,
     .sa_flags = SA_SIGINFO | SA_RESTART,
-    .sa_mask = 0,
+    .sa_mask = {{0}},
   };
 
   sigaction(SIGINT,  &sigact, NULL);
