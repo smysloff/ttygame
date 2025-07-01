@@ -10,6 +10,11 @@
 
 void timespec_gettime(struct timespec *ts);
 
+Comparison_Result timespec_cmp(
+  const struct timespec *ts1,
+  const struct timespec *ts2
+);
+
 struct timespec timespec_sum(
   const struct timespec *ts1,
   const struct timespec *ts2

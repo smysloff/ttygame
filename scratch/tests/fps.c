@@ -44,10 +44,19 @@ void update_fps(void)
 void sync_frame_rate(void)
 {
   // @todo timespec_cmp
-  struct timespec sleep_time = timespec_diff(
-    &fps.required_frame_duration, &fps.current_frame_duration);
 
-  clock_nanosleep(CLOCK_MONOTONIC, 0, &sleep_time, NULL);
+  if (
+    GREATER == timespec_cmp(
+      &fps.required_frame_duration,
+      &fps.current_frame_duration
+    )
+  ) {
+    struct timespec sleep_time = timespec_diff(
+      &fps.required_frame_duration, &fps.current_frame_duration);
+
+    clock_nanosleep(CLOCK_MONOTONIC, 0, &sleep_time, NULL);
+  }
+
 }
 
 const struct timespec *get_timestamp(void)
