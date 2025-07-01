@@ -43,8 +43,6 @@ void update_fps(void)
 
 void sync_frame_rate(void)
 {
-  // @todo timespec_cmp
-
   if (
     GREATER == timespec_cmp(
       &fps.required_frame_duration,
@@ -53,6 +51,8 @@ void sync_frame_rate(void)
   ) {
     struct timespec sleep_time = timespec_diff(
       &fps.required_frame_duration, &fps.current_frame_duration);
+
+    timespec_add(&fps.deltatime, &sleep_time);
 
     clock_nanosleep(CLOCK_MONOTONIC, 0, &sleep_time, NULL);
   }
