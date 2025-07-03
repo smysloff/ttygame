@@ -15,3 +15,15 @@ void init_vec2(t_vec2 *v, int64_t x, int64_t y)
   v->y = y;
 }
 
+t_vec2f create_vec2f(double x, double y)
+{
+  return (t_vec2f) { .x = x, .y = y };
+}
+
+void init_vec2f(t_vec2f *v, double x, double y)
+{
+  assert(v != NULL && "Attempt to init NULL pointer");
+  v->x = x;
+  v->y = y;
+}
+
