@@ -24,18 +24,18 @@ int main(void)
 
   uint64_t player_id = add_entity(&(const t_entity_options) {
 
-    .position = create_vec2f(10, 21),
+    .position = create_vec2f(10, 5),
 
     .size     = create_vec2(4, 2),
 
-    .sprite1  = "▗▟▙▖"
-                "▝▟▙▘"
-                "▗▌▐▖"
+    .sprite1  = "▗▟▙▖" "\0"
+                "▝▟▙▘" "\0"
+                "▗▌▐▖" "\0"
                 "    ",
 
-    .sprite2  = " ▗▖ "
-                "▐▜▛▌"
-                " ▛▜ "
+    .sprite2  = " ▗▖ " "\0"
+                "▐▜▛▌" "\0"
+                " ▛▜ " "\0"
                 "▝▘▝▘",
 
   });
